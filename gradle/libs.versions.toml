@@ -1,0 +1,41 @@
+[versions]
+java = "21"
+
+springBoot = "4.0.1"
+springDependencyManagement = "1.1.7"
+
+problem = "0.29.1"
+
+testcontainers = "2.0.3"
+junit = "5.14.1"
+
+spotless = "8.1.0"
+lombok = "1.18.42"
+
+[libraries]
+# Spring Boot starters (used by starters, not necessarily by services directly)
+bootAutoconfigure = { module = "org.springframework.boot:spring-boot-autoconfigure" }
+bootConfigurationProcessor = { module = "org.springframework.boot:spring-boot-configuration-processor" }
+bootStarter = { module = "org.springframework.boot:spring-boot-starter" }
+bootStarterWeb = { module = "org.springframework.boot:spring-boot-starter-web" }
+bootStarterActuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+
+bootStarterSecurity = { module = "org.springframework.boot:spring-boot-starter-security" }
+bootStarterOauth2ResourceServer = { module = "org.springframework.boot:spring-boot-starter-oauth2-resource-server" }
+bootStarterOauth2Client = { module = "org.springframework.boot:spring-boot-starter-oauth2-client" }
+
+#micrometerCore = { module = "io.micrometer:micrometer-core", version.ref = "micrometer" }
+
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+
+# Problem Details helpers (optional)
+zalandoProblemSpringWeb = { module = "org.zalando:problem-spring-web", version.ref = "problem" }
+
+# Testing
+junitBom = { module = "org.junit:junit-bom", version.ref = "junit" }
+testcontainersBom = { module = "org.testcontainers:testcontainers-bom", version.ref = "testcontainers" }
+
+[plugins]
+springBoot = { id = "org.springframework.boot", version.ref = "springBoot" }
+springDepMgmt = { id = "io.spring.dependency-management", version.ref = "springDependencyManagement" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
