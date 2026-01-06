@@ -12,17 +12,11 @@ class SpringBootLibraryConventionPlugin : Plugin<Project> {
         // Spring deps are controlled by consumers (service repos) via BOM,
         // but starters can still declare api/implementation dependencies normally.
         // No Boot plugin needed.
-        val libs = libsCatalog()
-        val bootVersion = libs.findVersion("springBoot").get().requiredVersion
+        // val libs = libsCatalog()
+        // val junitVersion = libs.findVersion("junit").get().requiredVersion
 
         dependencies {
-            add("api", platform("org.springframework.boot:spring-boot-dependencies:$bootVersion"))
-            add("annotationProcessor", platform("org.springframework.boot:spring-boot-dependencies:$bootVersion"))
-            add("testAnnotationProcessor", platform("org.springframework.boot:spring-boot-dependencies:$bootVersion"))
-
             // Keep default test stack minimal; consumers decide.
-            add("testImplementation", platform("org.junit:junit-bom:5.11.4"))
-            add("testImplementation", "org.junit.jupiter:junit-jupiter")
         }
     }
 }

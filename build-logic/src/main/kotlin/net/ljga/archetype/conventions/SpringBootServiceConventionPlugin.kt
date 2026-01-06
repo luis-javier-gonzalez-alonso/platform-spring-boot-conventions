@@ -9,7 +9,6 @@ class SpringBootServiceConventionPlugin : Plugin<Project> {
         pluginManager.apply("java")
         pluginManager.apply("com.diffplug.spotless")
         pluginManager.apply("org.springframework.boot")
-        pluginManager.apply("io.spring.dependency-management")
         pluginManager.apply("net.ljga.archetype.conventions.platform-bom")
 
         configureJavaToolchainFromCatalog()

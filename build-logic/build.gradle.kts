@@ -25,7 +25,7 @@ dependencies {
     // Access to version catalog from included build:
     // We'll read versions from root via TOML at consumption time, so keep build-logic lean.
 
-    implementation("com.diffplug.spotless:spotless-plugin-gradle:6.25.0")
+    implementation("com.diffplug.spotless:spotless-plugin-gradle:${libs.versions.spotless.get()}")
 }
 
 gradlePlugin {
