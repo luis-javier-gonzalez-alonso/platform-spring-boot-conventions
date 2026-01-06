@@ -4,8 +4,7 @@ plugins {
 
 dependencies {
     api("org.springframework.boot:spring-boot-starter-web")
-    // Optional helper library (you can remove and write your own handler)
-    implementation("org.zalando:problem-spring-web")
+    api("org.springframework.boot:spring-boot-starter-validation")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 }
