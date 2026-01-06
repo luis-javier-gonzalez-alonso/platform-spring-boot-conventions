@@ -1,8 +1,9 @@
 [versions]
-archetype = "0.2.0-SNAPSHOT"
+archetype = "0.3.0-SNAPSHOT"
 java = "21"
 
 springBoot = "4.0.1"
+springCloud = "2025.1.0"
 springDependencyManagement = "1.1.7"
 
 problem = "0.29.1"
@@ -24,6 +25,8 @@ bootStarterActuator = { module = "org.springframework.boot:spring-boot-starter-a
 bootStarterSecurity = { module = "org.springframework.boot:spring-boot-starter-security" }
 bootStarterOauth2ResourceServer = { module = "org.springframework.boot:spring-boot-starter-oauth2-resource-server" }
 bootStarterOauth2Client = { module = "org.springframework.boot:spring-boot-starter-oauth2-client" }
+
+springCloudBom = { module = "org.springframework.cloud:spring-cloud-dependencies", version.ref = "springCloud" }
 
 #micrometerCore = { module = "io.micrometer:micrometer-core", version.ref = "micrometer" }
 

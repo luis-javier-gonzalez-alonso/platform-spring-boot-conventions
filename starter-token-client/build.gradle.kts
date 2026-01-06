@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     api("org.springframework.boot:spring-boot-starter-oauth2-client")
-    api("org.springframework.boot:spring-boot-starter-webflux")
+    compileOnly("org.springframework.boot:spring-boot-starter-web")
+    compileOnly("org.springframework.boot:spring-boot-starter-webflux")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 }
