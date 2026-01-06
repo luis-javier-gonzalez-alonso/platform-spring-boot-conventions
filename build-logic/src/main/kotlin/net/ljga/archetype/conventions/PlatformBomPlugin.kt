@@ -14,20 +14,15 @@ class PlatformBomPlugin : Plugin<Project> {
                 dependencies.platform(project(":bom"))
             } else {
                 // Consumer build: use published BOM aligned to this plugin version
-                val pluginVersion =
-                    this::class.java.`package`?.implementationVersion
-                        ?: error(
-                            "Cannot determine plugin version (missing Implementation-Version). " +
-                                    "If developing locally, use includeBuild(...) or publish the plugin first."
-                        )
-
-                dependencies.platform("net.ljga.archetype:bom:$pluginVersion")
+                val archetypeVersion = archetypeVersionFromResource()
+                dependencies.platform("net.ljga.archetype:bom:$archetypeVersion")
             }
 
         dependencies {
             add("implementation", bom)
-            add("testImplementation", bom)
             add("annotationProcessor", bom)
+
+            add("testImplementation", bom)
             add("testAnnotationProcessor", bom)
         }
     }

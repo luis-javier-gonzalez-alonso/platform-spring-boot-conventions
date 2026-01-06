@@ -13,15 +13,13 @@ class JavaLibraryConventionPlugin : Plugin<Project> {
         configureJavaToolchainFromCatalog()
         configureTesting()
 
-        val libs = libsCatalog()
-        val lombok = libs.findLibrary("lombok")
-            .orElseThrow { IllegalStateException("Missing libs.lombok in version catalog") }
-
+        val lombokVersion = lombokVersionFromResource()
         dependencies {
-            add("compileOnly", lombok)
-            add("annotationProcessor", lombok)
-            add("testCompileOnly", lombok)
-            add("testAnnotationProcessor", lombok)
+            add("compileOnly", "org.projectlombok:lombok:$lombokVersion")
+            add("annotationProcessor", "org.projectlombok:lombok:$lombokVersion")
+
+            add("testCompileOnly", "org.projectlombok:lombok:$lombokVersion")
+            add("testAnnotationProcessor", "org.projectlombok:lombok:$lombokVersion")
         }
 
         extensions.configure(SpotlessExtension::class.java) {

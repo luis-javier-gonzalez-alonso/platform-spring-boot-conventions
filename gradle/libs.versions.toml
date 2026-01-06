@@ -1,18 +1,15 @@
 [versions]
-archetype = "0.3.0-SNAPSHOT"
+archetype = "0.9.0-SNAPSHOT"
 java = "21"
 
 springBoot = "4.0.1"
 springCloud = "2025.1.0"
-springDependencyManagement = "1.1.7"
 
-problem = "0.29.1"
+lombok = "1.18.42"
+spotless = "8.1.0"
 
 testcontainers = "2.0.3"
 junit = "5.14.1"
-
-spotless = "8.1.0"
-lombok = "1.18.42"
 
 [libraries]
 # Spring Boot starters (used by starters, not necessarily by services directly)
@@ -28,12 +25,7 @@ bootStarterOauth2Client = { module = "org.springframework.boot:spring-boot-start
 
 springCloudBom = { module = "org.springframework.cloud:spring-cloud-dependencies", version.ref = "springCloud" }
 
-#micrometerCore = { module = "io.micrometer:micrometer-core", version.ref = "micrometer" }
-
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
-
-# Problem Details helpers (optional)
-zalandoProblemSpringWeb = { module = "org.zalando:problem-spring-web", version.ref = "problem" }
 
 # Testing
 junitBom = { module = "org.junit:junit-bom", version.ref = "junit" }
@@ -41,5 +33,4 @@ testcontainersBom = { module = "org.testcontainers:testcontainers-bom", version.
 
 [plugins]
 springBoot = { id = "org.springframework.boot", version.ref = "springBoot" }
-springDepMgmt = { id = "io.spring.dependency-management", version.ref = "springDependencyManagement" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }

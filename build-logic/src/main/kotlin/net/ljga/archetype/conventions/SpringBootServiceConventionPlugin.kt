@@ -3,6 +3,7 @@ package net.ljga.archetype.conventions
 import com.diffplug.gradle.spotless.SpotlessExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.dependencies
 
 class SpringBootServiceConventionPlugin : Plugin<Project> {
     override fun apply(target: Project): Unit = with(target) {
@@ -13,6 +14,15 @@ class SpringBootServiceConventionPlugin : Plugin<Project> {
 
         configureJavaToolchainFromCatalog()
         configureTesting()
+
+        val lombokVersion = lombokVersionFromResource()
+        dependencies {
+            add("compileOnly", "org.projectlombok:lombok:$lombokVersion")
+            add("annotationProcessor", "org.projectlombok:lombok:$lombokVersion")
+
+            add("testCompileOnly", "org.projectlombok:lombok:$lombokVersion")
+            add("testAnnotationProcessor", "org.projectlombok:lombok:$lombokVersion")
+        }
 
         extensions.configure(SpotlessExtension::class.java) {
             java {
