@@ -7,6 +7,7 @@ import org.gradle.kotlin.dsl.dependencies
 class SpringBootLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
         pluginManager.apply("net.ljga.archetype.conventions.java-library")
+        pluginManager.apply("net.ljga.archetype.conventions.platform-bom")
 
         // Spring deps are controlled by consumers (service repos) via BOM,
         // but starters can still declare api/implementation dependencies normally.

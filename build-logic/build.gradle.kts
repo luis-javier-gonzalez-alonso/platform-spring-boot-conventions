@@ -1,5 +1,19 @@
 plugins {
     `kotlin-dsl`
+    `maven-publish`
+}
+
+group = "net.ljga.archetype"
+version = libs.versions.archetype.get()
+
+kotlin {
+    jvmToolchain(21)
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
 }
 
 repositories {
@@ -16,6 +30,10 @@ dependencies {
 
 gradlePlugin {
     plugins {
+        register("platformBom") {
+            id = "net.ljga.archetype.conventions.platform-bom"
+            implementationClass = "net.ljga.archetype.conventions.PlatformBomPlugin"
+        }
         register("javaLibraryConvention") {
             id = "net.ljga.archetype.conventions.java-library"
             implementationClass = "net.ljga.archetype.conventions.JavaLibraryConventionPlugin"
@@ -27,6 +45,24 @@ gradlePlugin {
         register("springBootServiceConvention") {
             id = "net.ljga.archetype.conventions.spring-boot-service"
             implementationClass = "net.ljga.archetype.conventions.SpringBootServiceConventionPlugin"
+        }
+    }
+}
+
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/luis-javier-gonzalez-alonso/platform-spring-boot-conventions")
+            credentials {
+                username = providers.gradleProperty("gpr.user")
+                    .orElse(providers.environmentVariable("GITHUB_ACTOR"))
+                    .get()
+                password = providers.gradleProperty("gpr.key")
+                    .orElse(providers.environmentVariable("GITHUB_TOKEN"))
+                    .get()
+            }
         }
     }
 }

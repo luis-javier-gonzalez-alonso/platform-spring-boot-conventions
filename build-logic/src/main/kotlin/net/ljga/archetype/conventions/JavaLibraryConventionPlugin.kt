@@ -31,7 +31,7 @@ class JavaLibraryConventionPlugin : Plugin<Project> {
             }
             kotlinGradle {
                 ktlint()
-                target("*.gradle.kts", "build-logic/src/**/*.kotlin")
+                target("*.gradle.kts", "build-logic/src/**/*.kt")
             }
         }
     }
