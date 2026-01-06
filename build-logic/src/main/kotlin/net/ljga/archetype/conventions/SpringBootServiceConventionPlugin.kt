@@ -21,7 +21,7 @@ class SpringBootServiceConventionPlugin : Plugin<Project> {
             }
             kotlinGradle {
                 ktlint()
-                target("*.gradle.kts")
+                target("*.gradle.kts", "*.kt")
             }
         }
 

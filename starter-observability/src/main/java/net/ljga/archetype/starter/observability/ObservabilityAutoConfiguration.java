@@ -7,39 +7,61 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
+import org.jspecify.annotations.NonNull;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.lang.NonNull;
+import org.springframework.core.Ordered;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @AutoConfiguration
 public class ObservabilityAutoConfiguration {
 
   @Bean
-  OncePerRequestFilter correlationIdFilter() {
-    return new OncePerRequestFilter() {
-      @Override
-      protected void doFilterInternal(
-          @NonNull HttpServletRequest request,
-          @NonNull HttpServletResponse response,
-          @NonNull FilterChain filterChain)
-          throws ServletException, IOException {
+  @ConditionalOnProperty(
+      prefix = "app.observability",
+      name = "enabled",
+      havingValue = "true",
+      matchIfMissing = true)
+  @ConditionalOnMissingBean(name = "correlationIdFilterRegistration")
+  public FilterRegistrationBean<OncePerRequestFilter> correlationIdFilterRegistration(
+      @Value("${app.observability.correlation-header:X-Correlation-Id}") String correlationHeader,
+      @Value("${app.observability.mdc-key:correlationId}") String mdcKey) {
 
-        String header =
-            Optional.ofNullable(request.getHeader("X-Correlation-Id"))
-                .filter(s -> !s.isBlank())
-                .orElse(UUID.randomUUID().toString());
+    OncePerRequestFilter filter =
+        new OncePerRequestFilter() {
+          @Override
+          protected void doFilterInternal(
+              @NonNull HttpServletRequest request,
+              @NonNull HttpServletResponse response,
+              @NonNull FilterChain filterChain)
+              throws ServletException, IOException {
 
-        MDC.put("correlationId", header);
-        response.setHeader("X-Correlation-Id", header);
+            String correlationId =
+                Optional.ofNullable(request.getHeader(correlationHeader))
+                    .filter(s -> !s.isBlank())
+                    .orElse(UUID.randomUUID().toString());
 
-        try {
-          filterChain.doFilter(request, response);
-        } finally {
-          MDC.remove("correlationId");
-        }
-      }
-    };
+            MDC.put(mdcKey, correlationId);
+
+            // echo it back for clients/tracing
+            response.setHeader(correlationHeader, correlationId);
+
+            try {
+              filterChain.doFilter(request, response);
+            } finally {
+              MDC.remove(mdcKey);
+            }
+          }
+        };
+
+    FilterRegistrationBean<OncePerRequestFilter> reg = new FilterRegistrationBean<>(filter);
+    reg.setName("correlationIdFilter");
+    reg.setOrder(Ordered.HIGHEST_PRECEDENCE + 10); // very early
+    return reg;
   }
 }
