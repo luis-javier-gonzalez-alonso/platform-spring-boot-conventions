@@ -1,5 +1,5 @@
 [versions]
-archetype = "0.10.0-SNAPSHOT"
+archetype = "0.11.0-SNAPSHOT"
 java = "21"
 
 springBoot = "4.0.1"
