@@ -1,6 +1,11 @@
 plugins {
     `kotlin-dsl`
     `maven-publish`
+    id(
+        libs.plugins.spotless
+            .get()
+            .pluginId,
+    ) version libs.versions.spotless
 }
 
 val catalog = extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
@@ -17,11 +22,13 @@ tasks.processResources {
     inputs.property("lombokVersion", lombokVersion)
 
     filesMatching("versions.properties") {
-        expand(mapOf(
-            "javaVersion" to javaVersion,
-            "archetypeVersion" to archetypeVersion,
-            "lombokVersion" to lombokVersion
-        ))
+        expand(
+            mapOf(
+                "javaVersion" to javaVersion,
+                "archetypeVersion" to archetypeVersion,
+                "lombokVersion" to lombokVersion,
+            ),
+        )
     }
 }
 
@@ -69,20 +76,36 @@ gradlePlugin {
     }
 }
 
-
 publishing {
     repositories {
         maven {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/luis-javier-gonzalez-alonso/platform-spring-boot-conventions")
             credentials {
-                username = providers.gradleProperty("gpr.user")
-                    .orElse(providers.environmentVariable("GITHUB_ACTOR"))
-                    .get()
-                password = providers.gradleProperty("gpr.key")
-                    .orElse(providers.environmentVariable("GITHUB_TOKEN"))
-                    .get()
+                username =
+                    providers
+                        .gradleProperty("gpr.user")
+                        .orElse(providers.environmentVariable("GITHUB_ACTOR"))
+                        .get()
+                password =
+                    providers
+                        .gradleProperty("gpr.key")
+                        .orElse(providers.environmentVariable("GITHUB_TOKEN"))
+                        .get()
             }
         }
+    }
+}
+
+spotless {
+    kotlin {
+        ktlint()
+        target("**/*.kt")
+        leadingTabsToSpaces(2)
+    }
+    kotlinGradle {
+        ktlint()
+        target("*.gradle.kts")
+        leadingTabsToSpaces(2)
     }
 }

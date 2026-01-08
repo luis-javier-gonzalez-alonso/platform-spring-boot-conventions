@@ -27,8 +27,9 @@ internal fun Project.configureMockitoAgentIfPresent() {
     afterEvaluate {
         tasks.withType<Test>().configureEach {
             doFirst {
-                val mockitoJar = classpath.files.firstOrNull { it.name.startsWith("mockito-core-") && it.name.endsWith(".jar") }
-                    ?: return@doFirst
+                val mockitoJar =
+                    classpath.files.firstOrNull { it.name.startsWith("mockito-core-") && it.name.endsWith(".jar") }
+                        ?: return@doFirst
 
                 val arg = "-javaagent:${mockitoJar.absolutePath}"
                 if (!allJvmArgs.contains(arg)) jvmArgs(arg)

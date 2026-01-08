@@ -1,5 +1,5 @@
 [versions]
-archetype = "0.11.0-SNAPSHOT"
+archetype = "0.12.0-SNAPSHOT"
 java = "21"
 
 springBoot = "4.0.1"
@@ -9,7 +9,6 @@ lombok = "1.18.42"
 spotless = "8.1.0"
 
 testcontainers = "2.0.3"
-junit = "5.14.1"
 
 [libraries]
 # Spring Boot starters (used by starters, not necessarily by services directly)
@@ -28,7 +27,6 @@ springCloudBom = { module = "org.springframework.cloud:spring-cloud-dependencies
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 
 # Testing
-junitBom = { module = "org.junit:junit-bom", version.ref = "junit" }
 testcontainersBom = { module = "org.testcontainers:testcontainers-bom", version.ref = "testcontainers" }
 
 [plugins]
