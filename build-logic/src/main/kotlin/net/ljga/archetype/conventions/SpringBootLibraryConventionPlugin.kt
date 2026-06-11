@@ -17,7 +17,8 @@ class SpringBootLibraryConventionPlugin : Plugin<Project> {
             // val junitVersion = libs.findVersion("junit").get().requiredVersion
 
             dependencies {
-                // Keep default test stack minimal; consumers decide.
+                add("testImplementation", "org.springframework.boot:spring-boot-starter-test")
+                add("testRuntimeOnly", "org.junit.platform:junit-platform-launcher")
             }
         }
 }

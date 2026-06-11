@@ -1,5 +1,4 @@
 [versions]
-archetype = "0.13.0-SNAPSHOT"
 java = "21"
 
 springBoot = "4.0.6"
@@ -7,6 +6,7 @@ springCloud = "2025.1.1"
 
 lombok = "1.18.46"
 spotless = "8.6.0"
+axionRelease = "1.17.2"
 
 testcontainers = "2.0.5"
 
@@ -43,3 +43,4 @@ testcontainersBom = { module = "org.testcontainers:testcontainers-bom", version.
 springBoot = { id = "org.springframework.boot", version.ref = "springBoot" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 errorprone = { id = "net.ltgt.errorprone", version.ref = "errorprone" }
+axionRelease = { id = "pl.allegro.tech.build.axion-release", version.ref = "axionRelease" }

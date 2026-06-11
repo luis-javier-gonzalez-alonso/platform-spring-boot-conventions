@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -28,9 +28,9 @@ public class ResourceServerAutoConfiguration {
 
   @Bean
   RestOperations jwksRestOperations(ResourceServerProperties props) {
-    var f = new HttpComponentsClientHttpRequestFactory();
+    var f = new SimpleClientHttpRequestFactory();
     int ms = Math.toIntExact(props.requestTimeout().toMillis());
-    f.setConnectionRequestTimeout(ms);
+    f.setConnectTimeout(ms);
     f.setReadTimeout(ms);
     return new RestTemplate(f);
   }

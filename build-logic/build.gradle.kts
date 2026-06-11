@@ -6,11 +6,23 @@ plugins {
             .get()
             .pluginId,
     ) version libs.versions.spotless
+    id(
+        libs.plugins.axionRelease
+            .get()
+            .pluginId,
+    ) version libs.versions.axionRelease
 }
 
 val catalog = extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
+
+scmVersion {
+    repository {
+        directory.set(rootDir.parentFile.absolutePath)
+    }
+}
+
 val javaVersion = catalog.findVersion("java").get().requiredVersion
-val archetypeVersion = catalog.findVersion("archetype").get().requiredVersion
+val archetypeVersion = scmVersion.version
 val lombokVersion = catalog.findVersion("lombok").get().requiredVersion
 val errorproneVersion = catalog.findVersion("errorprone").get().requiredVersion
 val errorproneCoreVersion = catalog.findVersion("errorproneCore").get().requiredVersion

@@ -1,13 +1,14 @@
 plugins {
-    // No Spring Boot plugin at root; keep it as an aggregator.
+    alias(libs.plugins.axionRelease)
 }
 
 val libs = extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
-val archetypeVersion = libs.findVersion("archetype").get().requiredVersion
+
+version = scmVersion.version
 
 allprojects {
     group = "net.ljga.archetype"
-    version = archetypeVersion
+    version = rootProject.version
 
     repositories {
         mavenCentral()
