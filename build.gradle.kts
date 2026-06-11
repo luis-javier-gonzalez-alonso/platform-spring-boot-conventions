@@ -68,3 +68,28 @@ subprojects {
         }
     }
 }
+
+val publishPlugins by tasks.registering {
+    group = "publishing"
+    description = "Publishes the build-logic convention plugins."
+    dependsOn(gradle.includedBuild("build-logic").task(":publish"))
+}
+
+tasks.register("publishAll") {
+    group = "publishing"
+    description = "Publishes all subprojects first, then the build-logic convention plugins."
+    
+    val subprojectPublishTasks = subprojects.map { sub ->
+        sub.tasks.matching { it.name == "publish" }
+    }
+    dependsOn(subprojectPublishTasks)
+    dependsOn(publishPlugins)
+}
+
+publishPlugins.configure {
+    mustRunAfter(subprojects.map { sub ->
+        sub.tasks.matching { it.name == "publish" }
+    })
+}
+
+
