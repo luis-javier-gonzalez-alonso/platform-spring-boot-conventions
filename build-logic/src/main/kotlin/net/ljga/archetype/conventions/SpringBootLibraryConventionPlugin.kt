@@ -2,11 +2,18 @@ package net.ljga.archetype.conventions
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.withType
 
 class SpringBootLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) =
         with(target) {
+            tasks.withType<JavaCompile>().configureEach {
+                options.compilerArgs.add("-parameters")
+                options.compilerArgs.add("-XDaddTypeAnnotationsToSymbol=true")
+            }
+
             pluginManager.apply("net.ljga.archetype.conventions.java-library")
             pluginManager.apply("net.ljga.archetype.conventions.platform-bom")
 
