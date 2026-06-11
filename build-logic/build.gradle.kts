@@ -12,6 +12,10 @@ val catalog = extensions.getByType(VersionCatalogsExtension::class.java).named("
 val javaVersion = catalog.findVersion("java").get().requiredVersion
 val archetypeVersion = catalog.findVersion("archetype").get().requiredVersion
 val lombokVersion = catalog.findVersion("lombok").get().requiredVersion
+val errorproneVersion = catalog.findVersion("errorprone").get().requiredVersion
+val errorproneCoreVersion = catalog.findVersion("errorproneCore").get().requiredVersion
+val nullawayVersion = catalog.findVersion("nullaway").get().requiredVersion
+val jspecifyVersion = catalog.findVersion("jspecify").get().requiredVersion
 
 group = "net.ljga.archetype"
 version = archetypeVersion
@@ -20,6 +24,9 @@ tasks.processResources {
     inputs.property("javaVersion", javaVersion)
     inputs.property("archetypeVersion", archetypeVersion)
     inputs.property("lombokVersion", lombokVersion)
+    inputs.property("errorproneCoreVersion", errorproneCoreVersion)
+    inputs.property("nullawayVersion", nullawayVersion)
+    inputs.property("jspecifyVersion", jspecifyVersion)
 
     filesMatching("versions.properties") {
         expand(
@@ -27,6 +34,9 @@ tasks.processResources {
                 "javaVersion" to javaVersion,
                 "archetypeVersion" to archetypeVersion,
                 "lombokVersion" to lombokVersion,
+                "errorproneCoreVersion" to errorproneCoreVersion,
+                "nullawayVersion" to nullawayVersion,
+                "jspecifyVersion" to jspecifyVersion,
             ),
         )
     }
@@ -53,6 +63,7 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-gradle-plugin:${libs.versions.springBoot.get()}")
     implementation("com.diffplug.spotless:spotless-plugin-gradle:${libs.versions.spotless.get()}")
+    implementation("net.ltgt.errorprone:net.ltgt.errorprone.gradle.plugin:$errorproneVersion")
 }
 
 gradlePlugin {

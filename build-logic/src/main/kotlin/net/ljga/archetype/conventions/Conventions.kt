@@ -18,6 +18,12 @@ internal fun archetypeVersionFromResource(): String = readProperty("versions.pro
 
 internal fun lombokVersionFromResource(): String = readProperty("versions.properties", "lombok.version")
 
+internal fun errorproneCoreVersionFromResource(): String = readProperty("versions.properties", "errorprone.core.version")
+
+internal fun nullawayVersionFromResource(): String = readProperty("versions.properties", "nullaway.version")
+
+internal fun jspecifyVersionFromResource(): String = readProperty("versions.properties", "jspecify.version")
+
 private fun readProperty(
     file: String,
     property: String,
