@@ -1,0 +1,35 @@
+name: Cleanup Old SNAPSHOT Packages
+
+on:
+  schedule:
+    - cron: '0 0 * * 0' # Run weekly on Sunday at midnight
+  workflow_dispatch:    # Allow manual triggers from the GitHub UI
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write # Required to delete packages
+    strategy:
+      fail-fast: false
+      matrix:
+        package: 
+          - 'bom'
+          - 'starter-error-handling'
+          - 'starter-observability'
+          - 'starter-security-resource-server'
+          - 'starter-token-client'
+          - 'starter-token-client-feign'
+          - 'build-logic'
+          - 'net.ljga.archetype.conventions.spring-boot-library.gradle.plugin'
+          - 'net.ljga.archetype.conventions.spring-boot-service.gradle.plugin'
+          - 'net.ljga.archetype.conventions.java-library.gradle.plugin'
+          - 'net.ljga.archetype.conventions.platform-bom.gradle.plugin'
+    steps:
+      - name: Delete old snapshot versions for ${{ matrix.package }}
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: ${{ matrix.package }}
+          package-type: 'maven'
+          min-versions-to-keep: 3 # Keeps the 3 most recent snapshots
+          ignore-versions: '^(?!.*-SNAPSHOT).*' # ONLY delete versions containing -SNAPSHOT
