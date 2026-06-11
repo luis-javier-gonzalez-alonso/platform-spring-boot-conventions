@@ -9,8 +9,8 @@ for PR in $PRS; do
     echo "Evaluating PR #$PR"
     echo "======================================"
     
-    # Checkout PR
-    gh pr checkout $PR
+    # Checkout PR with force to reset the local branch if Dependabot force-pushed a rebase
+    gh pr checkout $PR --force
     
     # Evaluate PR (run build and test)
     if ./gradlew clean build; then
