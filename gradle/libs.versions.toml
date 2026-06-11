@@ -10,7 +10,7 @@ axionRelease = "1.17.2"
 
 testcontainers = "2.0.5"
 
-errorprone = "4.1.0"
+errorprone = "5.1.0"
 errorproneCore = "2.36.0"
 nullaway = "0.12.6"
 jspecify = "1.0.0"
