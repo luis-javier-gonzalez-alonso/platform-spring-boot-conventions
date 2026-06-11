@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.slf4j.MDC;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -40,6 +41,7 @@ public class ErrorHandlingAutoConfiguration {
     return mappers;
   }
 
+  @Slf4j
   @RestControllerAdvice
   @Order(Ordered.HIGHEST_PRECEDENCE)
   @ConditionalOnClass(ProblemDetail.class)
@@ -134,6 +136,7 @@ public class ErrorHandlingAutoConfiguration {
 
     private ResponseEntity<@NonNull ProblemDetail> handleNotReadable(
         HttpMessageNotReadableException ex, HttpServletRequest req) {
+      log.debug("HTTP message not readable", ex);
 
       ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
       pd.setType(typeUri("/bad-request"));
@@ -182,6 +185,7 @@ public class ErrorHandlingAutoConfiguration {
 
     private ResponseEntity<@NonNull ProblemDetail> handleFallback(
         Throwable ex, HttpServletRequest req) {
+      log.debug("Fallback error handling triggered", ex);
 
       ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
       pd.setType(typeUri("/internal"));

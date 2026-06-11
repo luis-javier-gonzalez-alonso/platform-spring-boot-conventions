@@ -27,7 +27,13 @@ subprojects {
             withSourcesJar()
             withJavadocJar()
         }
+
+        tasks.withType<Javadoc> {
+            val javadocOptions = options as org.gradle.external.javadoc.StandardJavadocDocletOptions
+            javadocOptions.addStringOption("Xdoclint:none", "-quiet")
+        }
     }
+
 
     configure<PublishingExtension> {
         repositories {

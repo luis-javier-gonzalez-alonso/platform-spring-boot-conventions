@@ -69,7 +69,7 @@ public class Oauth2ClientCredentialsTokenRefresher implements TokenRefresher {
   }
 
   @Scheduled(fixedDelayString = "PT10M") // TODO make configurable
-  private void periodicRefresh() {
+  public void periodicRefresh() {
     refreshToken("scheduled");
   }
 
