@@ -13,7 +13,7 @@ testcontainers = "2.0.5"
 errorprone = "5.1.0"
 errorproneCore = "2.50.0"
 nullaway = "0.13.6"
-jspecify = "1.0.0"
+jspecify = "1.0.1"
 
 [libraries]
 # Spring Boot starters (used by starters, not necessarily by services directly)
