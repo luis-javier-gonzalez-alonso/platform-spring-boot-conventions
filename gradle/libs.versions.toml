@@ -5,7 +5,7 @@ springBoot = "4.1.0"
 springCloud = "2025.1.1"
 
 lombok = "1.18.46"
-spotless = "8.6.0"
+spotless = "8.9.0"
 axionRelease = "1.21.2"
 
 testcontainers = "2.0.5"
