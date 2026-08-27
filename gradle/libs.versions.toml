@@ -2,7 +2,7 @@
 java = "21"
 
 springBoot = "4.1.0"
-springCloud = "2025.1.1"
+springCloud = "2025.1.3"
 
 lombok = "1.18.46"
 spotless = "8.6.0"
