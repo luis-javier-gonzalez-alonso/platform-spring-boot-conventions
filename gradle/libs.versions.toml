@@ -4,7 +4,7 @@ java = "21"
 springBoot = "4.1.0"
 springCloud = "2025.1.1"
 
-lombok = "1.18.46"
+lombok = "1.18.48"
 spotless = "8.6.0"
 axionRelease = "1.21.2"
 
